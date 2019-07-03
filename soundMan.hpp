@@ -28,10 +28,10 @@ class soundMan
         i2s_channel_t    channel;               // mono or stereo channel
         i2s_config_t     config;                // speed, mode,  DMA buf len ,  APLL choice
         i2s_pin_config_t pinout;                // pin config for the peripheral
-        uint8_t*         input_bfr = NULL;             // input buffer for receive operations.
+        uint16_t*        input_bfr = NULL;             // input buffer for receive operations.
         int              round_sample_count = 0;       // no of samples in each round of rx_audio().
-        esp_err_t       (*post_receive_callback)(uint8_t* ip_bfr);    // The attached function will receive the I2S received buffer as a param.
-        esp_err_t       (*post_transmit_callback)(uint8_t* op_bfr);
+        esp_err_t       (*post_receive_callback)(uint16_t* ip_bfr, uint16_t sample_len);    // The attached function will receive the I2S received buffer as a param.
+        esp_err_t       (*post_transmit_callback)(uint16_t* op_bfr, uint16_t sample_len);
 
     public:
         soundMan();                             // Default Constructor for soundMan.               
@@ -43,9 +43,9 @@ class soundMan
         // uint8_t*  push_input_buffer();                    // Returns the input buffer which 
         // uint8_t*  push_output_buffer();
         esp_err_t rx_audio();                             // Start Receiving
-        esp_err_t tx_audio(uint8_t* op_bfr, uint16_t size);          // Start Transmitting
-        esp_err_t attach_receive_cb(esp_err_t (*function)(uint8_t* ip_bfr));
-        esp_err_t attach_transmit_cb(esp_err_t (*function)(uint8_t* ip_bfr));
+        esp_err_t tx_audio(uint16_t* op_bfr, uint16_t sample_len);          // Start Transmitting
+        esp_err_t attach_receive_cb(esp_err_t (*function)(uint16_t* ip_bfr, uint16_t sample_len));
+        esp_err_t attach_transmit_cb(esp_err_t (*function)(uint16_t* ip_bfr, uint16_t sample_len));
 };
 
 #endif /* @ _SOUND_MANAGER_H_ */
