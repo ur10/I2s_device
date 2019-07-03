@@ -1,9 +1,9 @@
-#if 1
+if 1
 
 #include "main.hpp"
 #include "soundMan.hpp"
 
- uint8_t *test ="HERE GOES NOTHING";
+  char string[] ="HERE GOES NOTHING";
 
 esp_err_t       cb_function(uint16_t* ip_bfr,uint16_t len;
 
@@ -31,8 +31,8 @@ esp_err_t cb_function(uint16_t* ip_buffer,uint16_t len)
     we could test a .wav file but that would require SD card functionality,
     transmitting a simple text msg.
     */
-   ip_buffer = (uint16_t*)&test;
-   uint16_t= sizeof(test); 
+   ip_buffer = (uint16_t*)&string;
+    len = sizeof(string); 
 }
 
 
