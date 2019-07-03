@@ -3,19 +3,21 @@
 #include "main.hpp"
 #include "soundMan.hpp"
 
-esp_err_t       cb_function(uint8_t* ip_bfr);
+ uint8_t *test ="HERE GOES NOTHING";
+
+esp_err_t       cb_function(uint16_t* ip_bfr,uint16_t len;
 
 extern "C"{
   void app_main();
 }
 
 
-
 void app_main()
 {
     soundMan smgr;
-    smgr.attach_receive_cb(cb_function);
-    smgr.init();
+     smgr.init();    
+    smgr.attach_transmit_cb(cb_function);
+   
 
     // Tasks:
     // TODO: Define cb function.To do whatever with the data.
@@ -23,5 +25,15 @@ void app_main()
 
 
 }
+esp_err_t cb_function(uint16_t* ip_buffer,uint16_t len)
+{
+    /*
+    we could test a .wav file but that would require SD card functionality,
+    transmitting a simple text msg.
+    */
+   ip_buffer = (uint16_t*)&test;
+   uint16_t= sizeof(test); 
+}
+
 
 #endif
