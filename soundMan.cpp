@@ -15,7 +15,7 @@ soundMan::soundMan()
         this->config.dma_buf_len          = 256; // 8000 samples per buffer.
         this->config.use_apll             = false;
         this->config.intr_alloc_flags     = ESP_INTR_FLAG_LEVEL1;
-        this->config.mode                 = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX);
+        this->config.mode                 = (i2s_mode_t)(I2S_MODE_SLAVE | I2S_MODE_TX);
         this->config.sample_rate          = standard_MIC_SAMPLE_RATE;
     }   // End Config Setup.
 
@@ -91,7 +91,9 @@ esp_err_t soundMan::tx_audio(uint16_t* op_bfr, uint16_t sample_len)
 {
     esp_err_t err;
     size_t bytes_written = 0;
-    
+               
+     this->post_transmit_callback(&op_bfr,sample_len);
+
     if((err = i2s_write(this->port, op_bfr, sample_len, &bytes_written, 200)) != ESP_OK)
         ESP_LOGE(soundManTag, "Specified %d but wrote %d bytes.", sample_len, bytes_written);
 
